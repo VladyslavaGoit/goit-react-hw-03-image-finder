@@ -1,28 +1,20 @@
 import { Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import Modal from './Modal/Modal';
-import { Button } from './Button/Button';
-import { MagnifyingGlass } from 'react-loader-spinner';
+import ImageGallery from './ImageGallery/ImageGallery';
 
 class App extends Component {
+  state = {
+    searchName: '',
+  };
+  handleSearchFormSubmit = searchName => {
+    this.setState({ searchName });
+  };
   render() {
+    const { searchName } = this.state;
     return (
       <div>
-        <Searchbar />
-        <MagnifyingGlass
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="MagnifyingGlass-loading"
-          wrapperStyle={{}}
-          wrapperClass="MagnifyingGlass-wrapper"
-          glassColor="#e5f5fb"
-          color="#000000"
-        />
-        <ImageGallery />
-        <Button />
-        <Modal />
+        <Searchbar onSubmit={this.handleSearchFormSubmit} />
+        <ImageGallery q={searchName} />
       </div>
     );
   }
