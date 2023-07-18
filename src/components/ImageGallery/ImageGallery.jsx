@@ -2,6 +2,7 @@ import { Component } from 'react';
 import axios from 'axios';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { ThreeDots } from 'react-loader-spinner';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 class ImageGallery extends Component {
   state = {
@@ -28,6 +29,9 @@ class ImageGallery extends Component {
           },
         });
         const { hits } = response.data;
+        if (!hits.length) {
+          throw new Error();
+        }
 
         if (prevProps.q !== q) {
           this.setState({
@@ -41,7 +45,10 @@ class ImageGallery extends Component {
           }));
         }
       } catch (error) {
-        console.log(error);
+        Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+        this.setState({ status: 'error' });
       }
     }
 
