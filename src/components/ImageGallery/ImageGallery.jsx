@@ -6,7 +6,7 @@ import { ThreeDots } from 'react-loader-spinner';
 
 class ImageGallery extends Component {
   state = {
-    images: null,
+    images: [],
     status: 'idle',
     page: 1,
   };
@@ -33,7 +33,7 @@ class ImageGallery extends Component {
           },
         });
         const data = response.data;
-        this.setState({ images: data, status: 'resolved' });
+        this.setState({ images: data.hits, status: 'resolved' });
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +52,11 @@ class ImageGallery extends Component {
           },
         });
         const data = response.data;
-        this.setState({ images: data, status: 'resolved' });
+        this.setState(prevState => ({
+          images: [...prevState.images, ...data.hits],
+          status: 'resolved',
+        }));
+        // this.setState({ images: data, status: 'resolved' });
       } catch (error) {
         console.log(error);
       }
@@ -80,16 +84,16 @@ class ImageGallery extends Component {
         <div className="container">
           {images && (
             <ul className="gallery">
-              {images.hits.map(({ id, webformatURL, largeImageURL }) => (
+              {images.map(({ id, webformatURL, largeImageURL }) => (
                 <ImageGalleryItem
                   key={id}
                   miniUrl={webformatURL}
                   largeUrl={largeImageURL}
                 />
               ))}
-              <Button loadeMore={this.handleLoadeMore} />
             </ul>
           )}
+          <Button loadeMore={this.handleLoadeMore} />
         </div>
       );
     }
