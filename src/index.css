@@ -219,3 +219,10 @@ img {
 .button:focus {
   background-color: #303f9f;
 }
+
+.loaderBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
