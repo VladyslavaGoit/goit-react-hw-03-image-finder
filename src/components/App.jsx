@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
-import { Button } from './Button/Button';
+import Button from './Button/Button';
 
 class App extends Component {
   state = {
@@ -33,7 +33,16 @@ class App extends Component {
           getStatus={this.handleStatus}
         />
         {this.state.status === 'resolved' && (
-          <Button loadeMore={this.handleLoadeMore} />
+          <Button
+            arrayIsOver={this.state.status}
+            loadeMore={this.handleLoadeMore}
+          />
+        )}
+        {this.state.status === 'arrayIsOver' && (
+          <Button
+            arrayIsOver={this.state.status}
+            loadeMore={this.handleLoadeMore}
+          />
         )}
       </div>
     );

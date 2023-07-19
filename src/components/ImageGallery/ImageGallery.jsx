@@ -43,6 +43,9 @@ class ImageGallery extends Component {
             images: [...prevState.images, ...hits],
             status: 'resolved',
           }));
+          if (hits.length < 12) {
+            this.setState({ status: 'arrayIsOver' });
+          }
         }
       } catch (error) {
         Notify.failure(
@@ -79,7 +82,7 @@ class ImageGallery extends Component {
         </div>
       );
     }
-    if (status === 'resolved') {
+    if (status === 'resolved' || status === 'arrayIsOver') {
       return (
         <div className="container">
           {images && (
